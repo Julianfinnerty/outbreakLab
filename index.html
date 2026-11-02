@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OutbreakLab</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <aside id="panel">
+    <header>
+      <div class="hrow"><h1>OutbreakLab</h1><button id="btnReset" class="danger" title="Put every setting back to its default and stop any run or replay. Files already written to output\ are kept.">Reset everything</button></div>
+      <div class="sub">GPU regional storm model → Level II volumes for GR2Analyst</div>
+    </header>
+    <div id="sections"></div>
+  </aside>
+  <main id="main">
+    <div id="toolbar"></div>
+    <div id="mapwrap"><canvas id="map"></canvas><div id="hint"></div><div id="legend"></div></div>
+    <div id="status"></div>
+  </main>
+</div>
+<div id="err" class="hidden"></div>
+<script src="js/util.js"></script>
+<script src="js/noise.js"></script>
+<script src="js/samples.js"></script>
+<script src="js/sounding.js"></script>
+<script src="js/soundinggen/rng.js"></script>
+<script src="js/soundinggen/stations.js"></script>
+<script src="js/soundinggen/regimes.js"></script>
+<script src="js/soundinggen/generator.js"></script>
+<script src="js/soundinggen/outlook.js"></script>
+<script src="js/mapdata.js"></script>
+<script src="js/geo.js"></script>
+<script src="js/solver.js"></script>
+<script src="js/model.js"></script>
+<script src="js/palettes_ir.js"></script>
+<script src="js/hurricane.js"></script>
+<script src="js/radar.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+OUTBREAKLAB V2.0 — IPHONE DEPLOYMENT
+
+1. Download this ZIP to the iPhone Files app.
+2. Create/sign in to GitHub in Safari or the GitHub app. Create a NEW repository named OutbreakLab (public is easiest for Render's free Blueprint flow; note that source code will be public).
+3. Upload the contents inside the OutbreakLab folder to the repository, keeping the folder structure. The render.yaml must be at the repository root, alongside server.py and index.html. Do not upload the outer ZIP as a single file.
+4. Sign in to Render, choose New -> Blueprint, connect GitHub and select the repository. Review the Blueprint and deploy the free service if available.
+5. Wait for deployment to finish, then open the generated onrender.com URL in Safari.
+6. In Safari tap Share -> Add to Home Screen.
+
+Notes: This deployment has not been published for you; you must create/connect your own accounts and approve deployment. The service is publicly reachable at its URL. Free Render services sleep after 15 minutes idle and discard local files when they restart/sleep/redeploy, so radar exports in output/ are not permanent. Start with a small grid on iPhone.
