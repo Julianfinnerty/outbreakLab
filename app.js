@@ -1807,12 +1807,31 @@ async function resetEverything() {
 }
 async function boot() {
   const rb = $('btnReset'); if (rb) rb.onclick = resetEverything;
-  try { await GPU.init(); }
-  catch (e) { showError(e.message); return; }
-  if (!GPU.floatFilter) showError('This GPU/browser lacks float32-filterable textures; the model needs them.');
+
+  // Build the ordinary interface before requesting WebGPU. Previously a failed WebGPU
+  // initialization returned here and left only the page header visible (the iPhone
+  // blank-screen symptom). The setup controls and map can still render without a GPU;
+  // only running the numerical model requires WebGPU.
   buildSounding();
   updateGeo();
   buildToolbar(); buildPanel(); setupMap(); buildReplayBar(); resize(); updateHint(); status();
+
+  try {
+    await GPU.init();
+  } catch (e) {
+    console.error('WebGPU initialization failed:', e);
+    showError('Simulation unavailable: ' + e.message + ' The setup interface is available, but running the storm model requires a compatible WebGPU browser/device.');
+    const S = $('status');
+    if (S) S.innerHTML = '<span class="bad"><b>WebGPU unavailable</b></span><span>Setup controls are available; the storm simulation cannot start on this browser/device.</span>';
+    return;
+  }
+  if (!GPU.floatFilter) {
+    showError('This GPU/browser lacks float32-filterable textures; the model needs them.');
+    const S = $('status');
+    if (S) S.innerHTML = '<span class="bad"><b>Required GPU feature unavailable</b></span><span>Setup controls are available; this device cannot run the model as configured.</span>';
+    return;
+  }
+  status();
   fetch('/api/status').then(r => r.json()).then(j => { RUN.server = true; const n = $('srvNote'); if (n) n.innerHTML = `Server OK on port ${j.port}${j.live ? ` · last run <code>${j.live}</code>` : ''}`; CFG.lastRun = j.live; })
     .catch(() => { const n = $('srvNote'); if (n) n.innerHTML = '<span style="color:var(--bad)">Server not reachable — run <code>start.bat</code> for Level II export.</span>'; });
   window.OB = { get model() { return MODEL; }, get radar() { return RADAR; }, get geo() { return GEO; }, CFG, RUN, startRun, stopRun, draw, paintField, setTool, setMode, Hurricane };
